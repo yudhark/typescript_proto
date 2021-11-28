@@ -1,0 +1,1 @@
+export {default as SiswaController} from "./siswa.controller"

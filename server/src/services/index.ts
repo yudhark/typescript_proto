@@ -1,0 +1,1 @@
+export {default as ObjectSiswa} from "./siswa.service"

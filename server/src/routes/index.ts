@@ -1,0 +1,1 @@
+export {default as siswa_router} from "./siswa.router"
