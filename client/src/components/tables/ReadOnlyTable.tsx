@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
 const currency_conversion = (value: number) => {
-  let returnedValue = value.toString();
-  returnedValue = returnedValue.replace(/\D/g, "");
-  returnedValue = returnedValue.replace(/(\d)(\d{2})$/, "$1.$2");
+  let returnedValue = value.toFixed(2);
+  // returnedValue = returnedValue.replace(/\D/g, "");
+  // returnedValue = returnedValue.replace(/(\d)(\d{2})$/, "$1.$2");
   returnedValue = returnedValue.replace(/(?=(\d{3})+(\D))\B/g, ",");
   return returnedValue;
 };
@@ -57,32 +57,54 @@ const RenderCell: React.FC<{ row: any; column: any; type?: string }> = ({
   column,
   type,
 }) => {
-  if (type && (type === "currency" || type === "number")) {
-    if (column.width) {
-      return (
-        <Cell
-          key={row._id + "_" + column.id}
-          lebar={column.width}
-          textAlign="right"
-        >
-          {currency_conversion(row[column.id])}
-        </Cell>
-      );
-    }
-    return (
-      <Cell key={row._id + "_" + column.id} textAlign="right">
-        {currency_conversion(row[column.id])}
-      </Cell>
-    );
-  } else {
-    if (column.width) {
-      return (
-        <Cell key={row._id + "_" + column.id} lebar={column.width}>
-          {row[column.id]}
-        </Cell>
-      );
-    }
-    return <Cell key={row._id + "_" + column.id}>{row[column.id]}</Cell>;
+  switch (type) {
+    case "currency":
+    case "decimal":
+      if (column.width) {
+        return (
+          <Cell
+            key={row._id + "_" + column.id}
+            lebar={column.width}
+            textAlign="right"
+          >
+            {currency_conversion(row[column.id])}
+          </Cell>
+        );
+      } else {
+        return (
+          <Cell key={row._id + "_" + column.id} textAlign="right">
+            {currency_conversion(row[column.id])}
+          </Cell>
+        );
+      }
+    case "number":
+      if (column.width) {
+        return (
+          <Cell
+            key={row._id + "_" + column.id}
+            lebar={column.width}
+            textAlign="right"
+          >
+            {row[column.id]}
+          </Cell>
+        );
+      } else {
+        return (
+          <Cell key={row._id + "_" + column.id} textAlign="right">
+            {row[column.id]}
+          </Cell>
+        );
+      }
+    default:
+      if (column.width) {
+        return (
+          <Cell key={row._id + "_" + column.id} lebar={column.width}>
+            {row[column.id]}
+          </Cell>
+        );
+      } else {
+        return <Cell key={row._id + "_" + column.id}>{row[column.id]}</Cell>;
+      }
   }
 };
 
@@ -163,7 +185,7 @@ const ReadOnlyTable: React.FC<ReadOnlyTableProps> = ({
     }
   };
 
-  console.log(init_data)
+  console.log(init_data);
 
   return (
     <>

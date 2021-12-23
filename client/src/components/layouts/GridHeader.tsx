@@ -24,11 +24,10 @@ const GridHeader: React.FC<GridHeaderProps> = ({
   bgcolor,
   enablefilter,
   filterNode,
-  noflex,
   mode,
 }) => {
   return (
-    <Wrapper bgcolor={bgcolor} noflex={noflex} mode={mode}>
+    <Wrapper bgcolor={bgcolor} mode={mode} noflex={mode==="main" ? true : false}>
       <Row display="flex" flexdir="row" gap={10}>
         <Column display="flex" flexdir="row" flex float="left">
           {title ? <h5>{title}</h5> : <h5>Title Here</h5>}

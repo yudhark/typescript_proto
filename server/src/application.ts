@@ -34,7 +34,7 @@ class App {
     // last of line
     this.app
       .route("*")
-      .all((req: Request, res: Response) => res.status(404).send("Not Found!")); // last of routes line
+      .all((req: Request, res: Response) => res.status(404).json({error: true, message: "Not Found!"})); // last of routes line
   }
 }
 
